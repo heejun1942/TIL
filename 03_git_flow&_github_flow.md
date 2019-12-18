@@ -48,4 +48,3 @@ github의 오픈소스에 자유롭게 참여할 수 있는 협업방법
    ![](https://miro.medium.com/max/620/1*QfYdqZoEhtj-tf-QeaHROg.png)
 
 5. __Create pull request__ 버튼 클릭하여 메시지와 함께 전송!
-
