@@ -31,7 +31,7 @@ $ git add [파일 이름] # .은 모든 변경 사항을 staging area로 올림
 
 
 
-### (3) 버전 관리를 위한 스냅샷 저장: git commit
+### (3) 버전 관리를 위한 스냅샷 저장: `git commit`
 
 - 현재 상태에 대한 스냅샷을 `commit`하여, 버전 관리를 진행한다.
 
@@ -41,7 +41,7 @@ $ git commit -m "커밋 메시지"
 
 
 
-### (4) 원격 저장소 정보 추가: git remote
+### (4) 원격 저장소 정보 추가: `git remote`
 
 - Github 원격(remote) 저장소(repository)를 생성하고 TIL 폴더와 연결한다. 
 - 새로운 원격 저장소가 추가될 때만 입력한다.
@@ -85,7 +85,7 @@ $ git config --global user.email "hphk.john@gamil.com"
 
 
 
-## 3. `README.md
+## 3. `README.md`
 
 > 원격(remote) 저장소(repository)에 대한 정보를 기록하는 마크다운 문서. 일반적으로 해당 프로젝트를 사용하기 위한 방법 등을 기재한다.
 

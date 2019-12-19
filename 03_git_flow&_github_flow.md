@@ -37,7 +37,7 @@ github의 오픈소스에 자유롭게 참여할 수 있는 협업방법
 
 #### [step]
 
-1. 참여하고자 하는 repository를 __Fork__하여 나의 github로 복제
+1. 참여하고자 하는 repository를 **Fork**하여 나의 github로 복제
 
 2. Fork한 repository를 `clone`하여 컴퓨터로 내려받음
 

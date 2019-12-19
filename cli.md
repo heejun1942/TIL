@@ -17,6 +17,7 @@
 - `touch [파일명]`: 파일 생성
 - `rm [파일명]`: 파일 삭제
   - `rm -r [폴더명]`: 폴더 삭제
+- `code .`: 현재 파일을 기준으로 VS가 열림.
 
 ### 버전관리
 
@@ -35,6 +36,7 @@
 
 - `git push [저장소 별명] master`: github에 올리기
 - `git clone [origin] master`:  복제해서 받아오기 (처음 한번만 사용)
+- `git clone [주소]`: github 복제받기
 - `git pull [origin] master`: 수정사항만 받아오기
 
 
