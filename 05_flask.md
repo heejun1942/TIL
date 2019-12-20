@@ -36,7 +36,7 @@ if __name__=="__main__":
 
 `render_template('hi.html')`: html파일을 불러옴
 
-
+- html파일은 **/templates**폴더에 생성하자.
 
 [예제1] 변수를 받아서 HTML로 출력
 
@@ -163,7 +163,7 @@ def movies():
 [예제]  */ping* 에서 */pong*으로 값 보내기
 
 1. */ping* 에서 keyword 값을 받아 */pong* 으로 보냄
-2. .py
+2. `.py`에서 
 
 ```python
 #ping_pong.py 파일
