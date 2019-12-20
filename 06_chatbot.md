@@ -32,11 +32,11 @@ if __name__ == ("__main__"):
 
 
 
-1. method > getMe :  내 정보 확인
+1. method > getMe :  정보 확인
 
 2. 챗봇에 `/start`입력
 
-3. method > getUpates : 계정아이디 복사
+3. method > getUpdates : (chat에 있는 id) 계정아이디 복사
 
 4. method > sendMessage: *chat_id*와 *text*정보가 필요함
 
@@ -49,7 +49,7 @@ if __name__ == ("__main__"):
    - 안전을 위해 `.env`파일에 쳇봇 id와 token을 넣어놓자.
 
    ```
-   #.evn
+   #.env
    
    CHAT_ID="[chat_id]"
    TELEGRAM_BOT_TOKEN="[chat_tocken]"
@@ -88,7 +88,9 @@ telegram서버와 내 서버를 연결.?
 
    https://ngrok.com/ > download > **ngrok**다운
 
-   cmd에서 -------------
+   cmd에서 `ngrok http 5000`입력하여 주소받음
+
+   
 
    'https:// ~~' 주소가 내 flask 주소
 
