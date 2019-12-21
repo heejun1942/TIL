@@ -1,17 +1,18 @@
 # 챗봇 만들기
 
-telegram > BotFather
+**Telegram**으로 나만의 챗봇 만들기
 
 
 
 ### 1. 챗봇 생성
 
-1. ` /newbot`입력 후 이름 설정 > token을 받음
-2. 검색창에서 나의 bot이름을 입력하여 들어감.
-3. `app.py` **flask**파일 생성
+1.  Telegram 설치 후 검색창에 BotFather 검색
+2. BotFather에 들어가 ` /newbot`입력 > 내 bot 이름 설정 후 token을 받을 수 있음
+3. 검색창에 내 bot이름을 검색하여 찾을 수 있음. 
+4. 챗봇과 정보를 주고받을 `app.py` **flask**파일을 만들자
 
 ```python
-#플라스크 기본설정
+# Flask 기본설정
 
 from flask import Flask
 
@@ -28,25 +29,35 @@ if __name__ == ("__main__"):
 
 (설명서: https://core.telegram.org/bots/api) 
 
-- 메소드 형식: https://api.telegram.org/bot<token>/METHOD_NAME 
+- .메소드 형식
+
+  ```
+   https://api.telegram.org/bot<token>/METHOD_NAME 
+  ```
 
 
 
-1. method > getMe :  정보 확인
+1. method > getMe: 제대로 bot이 생성되었는지 확인
 
-2. 챗봇에 `/start`입력
+2. `/start`입력한 후, getUpdates 메소드를 통해 chat_id확인 가능 (chat에 있는 id임)
 
-3. method > getUpdates : (chat에 있는 id) 계정아이디 복사
+   ```
+   https://api.telegram.org/bot<token>/getUpdates
+   ```
 
-4. method > sendMessage: *chat_id*와 *text*정보가 필요함
+3. sendMessage 메소드로 메시지 보내보기. *chat_id*와 *text*정보가 필요함
 
    - 정보 보내는 법: ?[변수1]=[값1]&[변수2]=[값2]
 
-     /sendMessage?chat_id=<내 id>&text=<안녕하세요>
+   ```
+   /sendMessage?chat_id=[내 id]&text=[메시지]
+   ```
 
-5. `pip install python-decouple`
+4. `pip install python-decouple`: python-decouple 라이브러리 설치
 
-   - 안전을 위해 `.env`파일에 쳇봇 id와 token을 넣어놓자.
+   > python-decouple:  python으로 ini 파일이나 env 설정 파일을 파싱할 수 있는 패키지
+
+   - 안전을 위해 `.env`파일에 chat_id와 token을 넣어놓자.
 
    ```
    #.env
@@ -72,7 +83,7 @@ if __name__ == ("__main__"):
 
    ( http://gitignore.io/ 에서 'window', 'flask', 'python', 'venv', 'visual studio code' 입력 후 코드 복붙)
 
-   - `commit` 후 `push`하면 `.evn`는 올라가지 않음
+   - `commit` 후 `push`하면 `.env`는 올라가지 않음
 
 
 
