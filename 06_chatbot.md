@@ -91,7 +91,7 @@ if __name__ == ("__main__"):
 
 >  WebHook을 통해 Telegram서버와 Flask서버를 연결하기 
 
-<img src="https://www.ntaso.com/wp-content/uploads/2016/04/telegram-bot.png" style="zoom: 50%;" />
+<img src="https://www.ntaso.com/wp-content/uploads/2016/04/telegram-bot.png" width="65%" />
 
 1. ngrok 다운로드
 
