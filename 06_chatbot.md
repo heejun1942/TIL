@@ -93,13 +93,13 @@ if __name__ == ("__main__"):
 
 <img src="https://www.ntaso.com/wp-content/uploads/2016/04/telegram-bot.png" width="65%" />
 
-1. ngrok 다운로드
+1. **ngrok** 다운로드
 
    > ngrok이란 방화벽 뒤에 있는 `로컬 서버`를 안전한 터널을 통해 공개 인터넷에 노출시켜 주는 도구. 
    >
    > 즉, 포트 포워딩과 같은 네트워크 환경 설정 변경없이 로컬에 실행중인 서버를 안전하게 외부에서 접근 할 수 있게 해줌.
 
-   https://ngrok.com/ > download > **ngrok**다운
+   https://ngrok.com/ > download > ngrok다운
 
    cmd에서 `ngrok http 5000`입력하여 주소를 받을 수 있음 (※주의: 실행시킬 때마다 주소가 변경됨)
 
@@ -107,9 +107,19 @@ if __name__ == ("__main__"):
 
    
 
-2. `webhook.py`파일 생성
+2. webhook 설정하기
+
+   - **setWebhook** 메소드 이용
+
+     ![](https://user-images.githubusercontent.com/58925328/71307646-4b648680-2434-11ea-8268-cbef549c8a5a.PNG)
+
+   
+
+   - `webhook.py`파일을 통해 setWebhook 메소드 보내기
 
    ```python
+   #webhook.py
+   
    from decouple import config 
    import requests
    
@@ -117,14 +127,28 @@ if __name__ == ("__main__"):
    url = "https://api.telegram.org/bot"
    ngrok_url = "https://2ccfe768.ngrok.io"
    
-   #setwebhook을 설정
+   #setWebhook 설정: requests()로 전송
    data = requests.get(f'{url}{token}/setwebhook?url={ngrok_url}/{token}')
    print(data.text)
    ```
 
+   
+
 3. Telegram과 데이터 주고받기
 
+   [예제1] 내 말 그대로 돌려받기
+
    ```python
+   from flask import Flask, render_template, request
+   from decouple import config
+   import requests
+   
+   app = Flask(__name__)
+   
+   token=config("TELEGRAM_BOT_TOKEN")
+   chat_id=config('CHAT_ID')
+   url = "https://api.telegram.org/bot"
+   
    @app.route(f'/{token}', methods=["POST"])
    def telegram():
        # 챗봇에서 내가쓴 데이터 읽어오기(json형태)
@@ -139,8 +163,66 @@ if __name__ == ("__main__"):
        
        #200은 접속성공을 의미하는 숫자임!
        return "ok", 200   
+   
+   
+   if __name__ == ("__main__"):
+       app.run(debug=True)
    ```
 
+    
+
+   [예제2] if문을 이용하여 대답 정하기
+
+   ```python
+   from flask import Flask, render_template, request
+   from decouple import config
+   import requests
+   import random
+   
+   app = Flask(__name__)
+   
+   token=config("TELEGRAM_BOT_TOKEN")
+   chat_id=config('CHAT_ID')
+   url = "https://api.telegram.org/bot"
+   
+   @app.route(f'/{token}', methods=["POST"])
+   def telegram():
+       re_data=request.get_json()
+   
+       re_id= re_data['message']['chat']['id']
+       text=re_data['message']['text']
+   
+       if text=="안녕":
+           return_text= "안녕하세요."
+       elif text =="로또":
+           numbers = range(1,46)
+           return_text= sorted(random.sample(numbers, 6))
+       else:
+           return_text="지금 지원하는 채팅은 '안녕'입니다."
+           
+       requests.get(f'{url}{token}/sendmessage?chat_id={re_id}&text={return_text}')
+       
+       return "ok", 200
+   
+   if __name__ == ("__main__"):
+       app.run(debug=True)
+   ```
+
+   
+
+### 5. python anywhere 이용하기
+
+python anywhere 사이트: https://www.pythonanywhere.com/
+
+1. 회원가입
+
+2. web > 생성
+
+3. python 3.7..?
+
+4. Files > mysite/ > `flask_app.py`에 `app.py` 복붙 & `.env`파일 생성
+
+   
 
 
-python anywhere https://www.pythonanywhere.com/
+
