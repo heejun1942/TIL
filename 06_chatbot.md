@@ -25,7 +25,7 @@ if __name__ == ("__main__"):
 
 
 
-### 2. 기본설정
+### 2. Telegram 메소드 이용방법
 
 (설명서: https://core.telegram.org/bots/api) 
 
@@ -87,23 +87,25 @@ if __name__ == ("__main__"):
 
 
 
-### 4. WebHook
+### 4. WebHook: ngrok사용
 
-telegram서버와 내 서버를 연결.? 
+>  WebHook을 통해 Telegram서버와 Flask서버를 연결하기 
 
-(참고: setWebHook)
+<img src="https://www.ntaso.com/wp-content/uploads/2016/04/telegram-bot.png" style="zoom: 50%;" />
 
-1. ngrok 다운
+1. ngrok 다운로드
 
-   - ngrok: 
+   > ngrok이란 방화벽 뒤에 있는 `로컬 서버`를 안전한 터널을 통해 공개 인터넷에 노출시켜 주는 도구. 
+   >
+   > 즉, 포트 포워딩과 같은 네트워크 환경 설정 변경없이 로컬에 실행중인 서버를 안전하게 외부에서 접근 할 수 있게 해줌.
 
    https://ngrok.com/ > download > **ngrok**다운
 
-   cmd에서 `ngrok http 5000`입력하여 주소받음
+   cmd에서 `ngrok http 5000`입력하여 주소를 받을 수 있음 (※주의: 실행시킬 때마다 주소가 변경됨)
+
+   ![](https://user-images.githubusercontent.com/58925328/71307355-806eda00-2430-11ea-98ca-c84c07236d4c.PNG)
 
    
-
-   'https:// ~~' 주소가 내 flask 주소
 
 2. `webhook.py`파일 생성
 
