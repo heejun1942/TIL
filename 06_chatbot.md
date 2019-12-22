@@ -90,8 +90,10 @@ if __name__ == ("__main__"):
 ### 4. WebHook: ngrok사용
 
 >  WebHook을 통해 Telegram서버와 Flask서버를 연결하기 
+>
+>  - Webhook: 역방향 API라고도 한다 . 일반적인 API는 클라이언트가 서버를 호출하는 반면, 웹훅의 경우 웹훅(URL)을 호출하는 서버 측에 등록하면 서버에서 특정 이벤트가 발생했을 때 클라이언트를 호출한다.
 
-<img src="https://www.ntaso.com/wp-content/uploads/2016/04/telegram-bot.png" width="65%" />
+<img src="https://www.ntaso.com/wp-content/uploads/2016/04/telegram-bot.png" width="55%" align="center" />
 
 1. **ngrok** 다운로드
 
@@ -107,7 +109,7 @@ if __name__ == ("__main__"):
 
    
 
-2. webhook 설정하기
+2. **webhook** 설정하기
 
    - **setWebhook** 메소드 이용
 
@@ -132,87 +134,136 @@ if __name__ == ("__main__"):
    print(data.text)
    ```
 
-   
 
-3. Telegram과 데이터 주고받기
 
-   [예제1] 내 말 그대로 돌려받기
+### 5. Telegram과 데이터 주고받기
+
+[예제1] `/write`페이지에서 form태그를 이용하여 내 Telegram에 메시지 보내기.
+
+```python
+#app.py
+
+from flask import Flask, render_template, request
+from decouple import config
+import requests
+
+app = Flask(__name__)
+
+token=config("TELEGRAM_BOT_TOKEN")
+chat_id=config('CHAT_ID')
+url = "https://api.telegram.org/bot"
+
+#write.html에서 form태그로 데이터를 받아 /send로 넘김
+@app.route('/write')
+def write():
+    return render_template('write.html')
+
+#write.html에서 form태그로 text변수를 받음
+@app.route('/send')
+def send():
+    text = request.args.get('text')
+    # /sendmessage를 통해 내 텔레그램으로 메시지를 보냄
+    requests.get(f'{url}{token}/sendmessage?chat_id={chat_id}&text={text}')
+    return render_template('send.html')
+
+
+if __name__ == ("__main__"):
+    app.run(debug=True)
+```
+
+```html
+<!--write.html-->
+<body>
+       <form action="/send">
+           <input type="text" name = "text">
+           <input type="submit" value = "메세지 보내기">
+       </form>
+   </body>
+```
+
+
+
+[예제2] 내 말을 그대로 따라하는 챗봇
 
    ```python
-   from flask import Flask, render_template, request
-   from decouple import config
-   import requests
+from flask import Flask, render_template, request
+from decouple import config
+import requests
    
-   app = Flask(__name__)
+app = Flask(__name__)
    
-   token=config("TELEGRAM_BOT_TOKEN")
-   chat_id=config('CHAT_ID')
-   url = "https://api.telegram.org/bot"
-   
-   @app.route(f'/{token}', methods=["POST"])
-   def telegram():
-       # 챗봇에서 내가쓴 데이터 읽어오기(json형태)
-       re_data=request.get_json()
-   
-       # json데이터에서 원하는 정보뽑기
-       re_id= re_data['message']['chat']['id']
-       text=re_data['message']['text']
-   
-       # 챗봇에게 다시보내기
-       requests.get(f'{url}{token}/sendmessage?chat_id={re_id}&text={text}')
-       
-       #200은 접속성공을 의미하는 숫자임!
-       return "ok", 200   
-   
-   
-   if __name__ == ("__main__"):
-       app.run(debug=True)
+token=config("TELEGRAM_BOT_TOKEN")
+chat_id=config('CHAT_ID')
+url = "https://api.telegram.org/bot"
+
+#webhook으로 설정한 url
+@app.route(f'/{token}', methods=["POST"])
+def telegram():
+    # 챗봇에서 내가쓴 데이터 읽어오기
+    re_data=request.get_json()
+
+    # json데이터에서 원하는 정보뽑기
+    re_id= re_data['message']['chat']['id']
+    text=re_data['message']['text']
+
+    # 챗봇에게 다시보내기
+    requests.get(f'{url}{token}/sendmessage?chat_id={re_id}&text={text}')
+
+    #200은 접속성공을 의미하는 숫자임!
+    return "ok", 200   
+
+
+if __name__ == ("__main__"):
+    app.run(debug=True)
    ```
 
+​    
+
+[예제3] if문을 이용하여 챗봇의 대답 정하기
+
+   ```python
+from flask import Flask, render_template, request
+from decouple import config
+import requests
+import random
+
+app = Flask(__name__)
+
+token=config("TELEGRAM_BOT_TOKEN")
+chat_id=config('CHAT_ID')
+url = "https://api.telegram.org/bot"
+
+#webhook으로 설정한 url
+@app.route(f'/{token}', methods=["POST"])
+def telegram():
+    # 챗봇에서 내가쓴 데이터 읽어오기
+    re_data=request.get_json()
+    re_id= re_data['message']['chat']['id']
+    text=re_data['message']['text']
     
+    if text=="안녕":
+        return_text= "안녕하세요."
+    elif text =="로또":
+        numbers = range(1,46)
+        return_text= sorted(random.sample(numbers, 6))
+    else:
+        return_text="지금 지원하는 채팅은 '안녕'입니다."
 
-   [예제2] if문을 이용하여 대답 정하기
+    # 챗봇에게 다시보내기
+    requests.get(f'{url}{token}/sendmessage?chat_id={re_id}&text={return_text}')
 
-   ```python
-   from flask import Flask, render_template, request
-   from decouple import config
-   import requests
-   import random
-   
-   app = Flask(__name__)
-   
-   token=config("TELEGRAM_BOT_TOKEN")
-   chat_id=config('CHAT_ID')
-   url = "https://api.telegram.org/bot"
-   
-   @app.route(f'/{token}', methods=["POST"])
-   def telegram():
-       re_data=request.get_json()
-   
-       re_id= re_data['message']['chat']['id']
-       text=re_data['message']['text']
-   
-       if text=="안녕":
-           return_text= "안녕하세요."
-       elif text =="로또":
-           numbers = range(1,46)
-           return_text= sorted(random.sample(numbers, 6))
-       else:
-           return_text="지금 지원하는 채팅은 '안녕'입니다."
-           
-       requests.get(f'{url}{token}/sendmessage?chat_id={re_id}&text={return_text}')
-       
-       return "ok", 200
-   
-   if __name__ == ("__main__"):
-       app.run(debug=True)
+    return "ok", 200   
+
+
+if __name__ == ("__main__"):
+    app.run(debug=True)
    ```
 
    
 
-### 5. python anywhere 이용하기
+### 6. python anywhere 이용하기
 
-python anywhere 사이트: https://www.pythonanywhere.com/
+> python anywhere 사이트: https://www.pythonanywhere.com/
 
 1. 회원가입
 
