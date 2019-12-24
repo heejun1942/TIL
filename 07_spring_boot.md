@@ -1,26 +1,82 @@
-# Spring boot
+# Spring boot 시작하기
 
-웹애플리케이션 제작
-
-spring.io/tools > Spring Tool Suite 4 다운 > cmd에서 `java -jar spring` `+tab`
+Spring boot를 사용하여 **웹 애플리케이션** 제작
 
 
 
-## 1. controller 만들기
+- 통신 흐름 : 클라이언트 요청과 서버 응답
 
-> Spring에서 컨트롤러를 지정해주기 위한 어노테이션: @RestController, @Controller
+<img src="https://user-images.githubusercontent.com/58925328/71407849-91615a80-267f-11ea-9768-d99c5700c194.PNG" width="80%" />
+
+- 스프링 MVC
+
+<img src="https://user-images.githubusercontent.com/58925328/71411164-a643eb00-268b-11ea-844b-f5f2424a9fd3.PNG" width="80%" />
+
+
+
+
+
+## 1. 설치
+
+1.1 STS(Spring Tool Suite 4) 설치 
+
+```
+java -jar spring [Tab키 누르기]
+```
+
+
+
+1.2 lombok 다운 
+
+> lombok: 변수의 set, get 메소드를 자동으로 생성해줌
+
+```
+java -jar lombok [Tab키 누르기]
+```
+
+
+
+## 2. controller 클래스 생성
+
+> Spring에서 컨트롤러를 지정해주기 위한 어노테이션. 차이점은 HTTP Response Body가 생성되는 방식임
 >
-> - 차이점은 HTTP Response Body가 생성되는 방식임
-
-`@RestController`: 주용도는 Json/Xml 형태로 객체 데이터를 반환
-
-`@Controller`: 주로 View를 반환하기 위해 사용 > 데이터를 반환하기 위해 @ResponseBody 어노테이션을 활용
-
+> - @Controller: 주로 View를 반환하기 위해 사용 > 데이터를 반환하기 위해 @ResponseBody 어노테이션을 활용
+> - @RestController: @Controller + @ResponseBody. 리턴값을 뷰리졸버로 매핑하지 않고 그대로 출력함. 주용도는 Json/Xml 형태로 객체 데이터를 반환.
+>
+> ( 참고: @은 **어노테이션**으로 자바를 위한 주석 )
 
 
 
+#### 2.1 응답 
 
-@GetMapping
+> View는 모델이 가진 정보를 어떻게 표현해야 하는지에 대한 로직을 갖고 있는 컴포넌트. 일반적으로 HTML이며, 엑셀, PDF, 이미지 등을 생성할 수도 있음.
+>
+> View Resolver는 사용할 뷰 오브젝트를 찾고 생성하는 작업을 함.
+
+[메소드]
+
+@RequestMapping: 요청에 대해 어떤 메소드가 처리할지를 맵핑
+
+@GetMapping: @RequestMapping(method = RequestMethod.GET) 의 축약형
+
+[응답 형태]
+
+- HTML: String, Map, void...
+- JSON: 복합데이터 + @ResponseBody 또는 @RestController
+
+
+
+※ 참고: SpringBoot DevTools: 서버 재기동없이 수정사항 적용
+
+1. build.gradle > Dependencies에 다음을 추가해주자.
+
+```java
+implementation "org.springframework.boot:spring-boot-devtools"
+```
+
+2. build.gradle에서 오른쪽 마우스 'Refresh Gradle Project' 클릭
+
+
 
 
 
@@ -34,11 +90,9 @@ JSON	 public *Map* home()
 
 
 
-@Controller
+
 
 @Slf4j
-
-@RequestMapping
 
 
 
