@@ -47,7 +47,7 @@ java -jar lombok [Tab키 누르기]
 
 
 
-#### 2.1 응답 
+### 2.1 응답 
 
 > View는 모델이 가진 정보를 어떻게 표현해야 하는지에 대한 로직을 갖고 있는 컴포넌트. 일반적으로 HTML이며, 엑셀, PDF, 이미지 등을 생성할 수도 있음.
 >
@@ -62,7 +62,12 @@ java -jar lombok [Tab키 누르기]
 [응답 형태]
 
 - HTML: String, Map, void...
+
 - JSON: 복합데이터 + @ResponseBody 또는 @RestController
+
+  - @GetMapping에서 가능(Map, DTO, List)
+
+  - String은 데이터를 담지않음 >json 안됨
 
 
 
@@ -78,6 +83,12 @@ implementation "org.springframework.boot:spring-boot-devtools"
 
 
 
+### 2.2 요청
+
+- @RequestParam: ?뒤에 파라미터 지정. 컨트롤러 메소드의 인자명과 동일. 
+
+- @ModelAttibute: 클래스의 변수명. 모델 클래스의 변수명과 동일. 클래스가 만들어져 있어야함.
+
 
 
 
@@ -91,18 +102,6 @@ JSON	 public *Map* home()
 
 
 
-
-@Slf4j
-
-
-
-@ResponseBody는 JSON으로 출력
-
-​	@GetMapping에서 가능(Map, DTO, List)
-
-
-
-String은 데이터를 담지않음 >json 안됨
 
 
 
