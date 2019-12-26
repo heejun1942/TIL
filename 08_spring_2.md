@@ -130,7 +130,6 @@ public class User {
   - Target: 핵심기능을 담고 있는 모듈로, 부가기능을 부여할 대상
   - Join Point (조인포인트): 어드바이스가 적용될 수 있는 위치. 타겟 객체가 구현한 인터테이스의 모든 메서드는 조인 포인트가 된다.
   - Weaving(위빙): 부가기능을 삽입하는 과정을 뜻함. AOP가 핵심기능 코드에 영향을 주지 않으면서 부가기능을 추가할 수 있도록 해주는 핵심적인 처리과정이다.
-
 - 구분된 애스펙트를 런타임 시에 필요한 위치에 동적으로 참여하게 할 수 있다.
 
 <img src="https://user-images.githubusercontent.com/58925328/71446787-83d4cf00-276a-11ea-8b37-421d28029fd0.jpeg" width=80% align="center"/>
@@ -183,9 +182,40 @@ public class ControllerAspect {
 
 ### 4. ControllerAdvice
 
-> @ControllerAdvice는 모든 @Controller 즉, 전역에서 발생할 수 있는 예외를 잡아 처리해주는 annotation.
->
-> @ExceptionHandler가 하나의 클래스에 대한 것
+> 프로그래밍에서 예외 처리는 중요하다. 하지만 if문이든 try-catch든 적용하다보면 코드가 복잡해지고 유지보수가 매우 어려워진다. 이런 문제를 조금이라도 개선하기 위해 @ExceptionHandler와 @ControllerAdvice를 사용할 수 있다.
 
-- 
+- @ControllerAdvice는 모든 @Controller 즉, 전역에서 발생할 수 있는 예외를 잡아 처리해주는 annotation. 
+
+  (@RestController의 예외 처리는 @RestControllerAdvice)
+
+- @ExceptionHandler가 하나의 클래스에 대한 것
+
+- `@ExceptionHandler({ Exception1.class, Exception2.class})`: 인자로 캐치하고 싶은 예외클래스를 등록함. 여러개 가능.
+
+
+
+### [AOP/ Filter/ Interceptor의 차이점]
+
+>Filter: HTTP 요청과 응답을 변경 할 수 있는 클래스
+>
+>Interceptor: Controller에 들어오는 요청 및 응답을 가로채는 역할. Filter와 유사하지만 동작 시기가 다름
+
+AOP: 어떠한 클래스든, 어떠한 메소드든 대상. 젤 강력한 파워를 가짐(1순위)
+
+Filter:  접속하는 주소(url)를 대상. 반드시 웹서버가 존재하는 곳에서만 동작.
+
+Interceptor:  접속하는 주소(url)를 대상.
+
+- filter와 Interceptor은 하는 일이 똑같. 차이점은 Filter는 자바의 고유기능. Interceptor는 스프링의 기능.
+- filter > interceptor > aop 순으로 동작
+
+
+
+### 5. JPA
+
+repository(저장소)가 데이터베이스의 정보를 입력, 삭제, 조회, 수정을 할 수 있다.
+
+데이터베이스 종류에 종속적이지 않음.
+
+@Entity:  JPA가 이파일을 참조해서 데이터베이스로 만듬.
 
