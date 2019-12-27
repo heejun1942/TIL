@@ -219,3 +219,28 @@ repository(저장소)가 데이터베이스의 정보를 입력, 삭제, 조회,
 
 @Entity:  JPA가 이파일을 참조해서 데이터베이스로 만듬.
 
+
+
+
+
+### RestTemplate
+
+> HTTP 통신에 유용하게 사용할 수 있는 라이브러리
+>
+> JSON/XML 형식의 응답결과에 대해 처리 지원
+
+
+
+object
+
+ResponseEntity
+
+-getForObject-
+
+Map
+
+List\<Map\>
+
+List\<object\> : model에 정의되 있어야함.?
+
+Object[]
