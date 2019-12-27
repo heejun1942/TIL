@@ -237,10 +237,20 @@ ResponseEntity
 
 -getForObject-
 
-Map
+Map: 키, 값을 가짐
 
-List\<Map\>
+List:순서에 따라 저장
+
+List\<Map\>: 
 
 List\<object\> : model에 정의되 있어야함.?
 
 Object[]
+
+
+
+>클래스? 유사한 특징을 지닌 객체들의 속성을 묶어 놓은 집합체
+>
+>object? 클래스를 사용할 수 있게 실체화한 것
+>
+>클래스안에 특정 기능을 구현한 것
