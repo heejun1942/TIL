@@ -28,7 +28,7 @@ java -jar spring [Tab키 누르기]
 
 1.2 lombok 다운 
 
-> lombok: 변수의 set, get 메소드를 자동으로 생성해줌
+> lombok: 변수의 set, get 메소드를 자동으로 생성해줌 ( **@Data** )
 
 ```
 java -jar lombok [Tab키 누르기]
