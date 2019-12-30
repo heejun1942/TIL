@@ -23,6 +23,9 @@
 - 요즘은 jsp대신 Tymeleaf를 쓰는 것을 권장.
 - 반복문 사용 가능
 - 조건문, 삼항연산자, swich 사용 가능
+- `th:attr="id=${board.id}"` 속성 주기(id 속성 부여) 
+
+
 
 
 
@@ -114,6 +117,8 @@ public class User {
 
 
 
+
+
 ### 3. AOP
 
 > 객체지향 프로그래밍(OOP)을 적용하여도 핵심기능과 부가 기능(로깅, 보안 등)을 분리해서 모듈화하는 것은 매우 여렵다. 이러한 문제를 AOP로 해결할 수 있다.
@@ -180,6 +185,8 @@ public class ControllerAspect {
 
 
 
+
+
 ### 4. ControllerAdvice
 
 > 프로그래밍에서 예외 처리는 중요하다. 하지만 if문이든 try-catch든 적용하다보면 코드가 복잡해지고 유지보수가 매우 어려워진다. 이런 문제를 조금이라도 개선하기 위해 @ExceptionHandler와 @ControllerAdvice를 사용할 수 있다.
@@ -211,13 +218,46 @@ Interceptor:  접속하는 주소(url)를 대상.
 
 
 
+
+
 ### 5. JPA
 
 repository(저장소)가 데이터베이스의 정보를 입력, 삭제, 조회, 수정을 할 수 있다.
 
-데이터베이스 종류에 종속적이지 않음.
+- ORM 프레임워크(Object Relational Mapping): 객체는 객체대로, 관계형 DB는 관계형 DB로 설계
 
-@Entity:  JPA가 이파일을 참조해서 데이터베이스로 만듬.
+- 데이터베이스 종류에 종속적이지 않음.
+
+- Model (자바 클래스)을 작성하면 자동으로 Table 생성 
+
+  @Entity:  JPA가 이파일을 참조해서 데이터베이스로 만듬.
+
+```java
+//JpaRepository<테이블명, ID> 
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long>{
+    
+}
+```
+
+```properties
+#application.properties
+
+# datasource
+spring.datasource.url= jdbc:h2:tcp://localhost/~/board
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# jpa
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.show-sql=true
+
+#테이블마다 id가 각자 생성되도록.
+# auto increment
+spring.jpa.hibernate.use-new-id-generator-mappings=false
+```
 
 
 
@@ -229,28 +269,3 @@ repository(저장소)가 데이터베이스의 정보를 입력, 삭제, 조회,
 >
 > JSON/XML 형식의 응답결과에 대해 처리 지원
 
-
-
-object
-
-ResponseEntity
-
--getForObject-
-
-Map: 키, 값을 가짐
-
-List:순서에 따라 저장
-
-List\<Map\>: 
-
-List\<object\> : model에 정의되 있어야함.?
-
-Object[]
-
-
-
->클래스? 유사한 특징을 지닌 객체들의 속성을 묶어 놓은 집합체
->
->object? 클래스를 사용할 수 있게 실체화한 것
->
->클래스안에 특정 기능을 구현한 것
