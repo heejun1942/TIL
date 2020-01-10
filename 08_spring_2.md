@@ -23,6 +23,9 @@
 - 요즘은 jsp대신 Tymeleaf를 쓰는 것을 권장.
 - 반복문 사용 가능
 - 조건문, 삼항연산자, swich 사용 가능
+- `th:attr="id=${board.id}"` 속성 주기(id 속성 부여) 
+
+
 
 
 
@@ -114,6 +117,8 @@ public class User {
 
 
 
+
+
 ### 3. AOP
 
 > 객체지향 프로그래밍(OOP)을 적용하여도 핵심기능과 부가 기능(로깅, 보안 등)을 분리해서 모듈화하는 것은 매우 여렵다. 이러한 문제를 AOP로 해결할 수 있다.
@@ -130,7 +135,6 @@ public class User {
   - Target: 핵심기능을 담고 있는 모듈로, 부가기능을 부여할 대상
   - Join Point (조인포인트): 어드바이스가 적용될 수 있는 위치. 타겟 객체가 구현한 인터테이스의 모든 메서드는 조인 포인트가 된다.
   - Weaving(위빙): 부가기능을 삽입하는 과정을 뜻함. AOP가 핵심기능 코드에 영향을 주지 않으면서 부가기능을 추가할 수 있도록 해주는 핵심적인 처리과정이다.
-
 - 구분된 애스펙트를 런타임 시에 필요한 위치에 동적으로 참여하게 할 수 있다.
 
 <img src="https://user-images.githubusercontent.com/58925328/71446787-83d4cf00-276a-11ea-8b37-421d28029fd0.jpeg" width=80% align="center"/>
@@ -181,11 +185,87 @@ public class ControllerAspect {
 
 
 
+
+
 ### 4. ControllerAdvice
 
-> @ControllerAdvice는 모든 @Controller 즉, 전역에서 발생할 수 있는 예외를 잡아 처리해주는 annotation.
->
-> @ExceptionHandler가 하나의 클래스에 대한 것
+> 프로그래밍에서 예외 처리는 중요하다. 하지만 if문이든 try-catch든 적용하다보면 코드가 복잡해지고 유지보수가 매우 어려워진다. 이런 문제를 조금이라도 개선하기 위해 @ExceptionHandler와 @ControllerAdvice를 사용할 수 있다.
 
-- 
+- @ControllerAdvice는 모든 @Controller 즉, 전역에서 발생할 수 있는 예외를 잡아 처리해주는 annotation. 
+
+  (@RestController의 예외 처리는 @RestControllerAdvice)
+
+- @ExceptionHandler가 하나의 클래스에 대한 것
+
+- `@ExceptionHandler({ Exception1.class, Exception2.class})`: 인자로 캐치하고 싶은 예외클래스를 등록함. 여러개 가능.
+
+
+
+### [AOP/ Filter/ Interceptor의 차이점]
+
+>Filter: HTTP 요청과 응답을 변경 할 수 있는 클래스
+>
+>Interceptor: Controller에 들어오는 요청 및 응답을 가로채는 역할. Filter와 유사하지만 동작 시기가 다름
+
+AOP: 어떠한 클래스든, 어떠한 메소드든 대상. 젤 강력한 파워를 가짐(1순위)
+
+Filter:  접속하는 주소(url)를 대상. 반드시 웹서버가 존재하는 곳에서만 동작.
+
+Interceptor:  접속하는 주소(url)를 대상.
+
+- filter와 Interceptor은 하는 일이 똑같. 차이점은 Filter는 자바의 고유기능. Interceptor는 스프링의 기능.
+- filter > interceptor > aop 순으로 동작
+
+
+
+
+
+### 5. JPA
+
+repository(저장소)가 데이터베이스의 정보를 입력, 삭제, 조회, 수정을 할 수 있다.
+
+- ORM 프레임워크(Object Relational Mapping): 객체는 객체대로, 관계형 DB는 관계형 DB로 설계
+
+- 데이터베이스 종류에 종속적이지 않음.
+
+- Model (자바 클래스)을 작성하면 자동으로 Table 생성 
+
+  @Entity:  JPA가 이파일을 참조해서 데이터베이스로 만듬.
+
+```java
+//JpaRepository<테이블명, ID> 
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Long>{
+    
+}
+```
+
+```properties
+#application.properties
+
+# datasource
+spring.datasource.url= jdbc:h2:tcp://localhost/~/board
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
+
+# jpa
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.jpa.show-sql=true
+
+#테이블마다 id가 각자 생성되도록.
+# auto increment
+spring.jpa.hibernate.use-new-id-generator-mappings=false
+```
+
+
+
+
+
+### RestTemplate
+
+> HTTP 통신에 유용하게 사용할 수 있는 라이브러리
+>
+> JSON/XML 형식의 응답결과에 대해 처리 지원
 
