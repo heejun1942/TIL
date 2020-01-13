@@ -89,7 +89,7 @@ Bool은 True, False의 첫글자가 대문자!
 
 
 
-※참고: 주피터 노트북 단축키
+※ 참고: 주피터 노트북 단축키
 
 `h`: 단축키보기
 
@@ -125,9 +125,23 @@ Bool은 True, False의 첫글자가 대문자!
 
 - list에 요소넣기: **append()**, extend(), insert(), 더하기연산자(+)
 
-- set은 순서가 없으므로 **특정 값만** 선택하여 조회하거나 수정 불가 (추가/삭제는 가능)
+- list의 길이 구하기: len()
 
-- Boolean False일 때  > 0, '', []
+- set은 순서가 없으므로 **특정 값만** 선택하여 조회하거나 수정 불가 (추가/삭제는 가능), 중복불가
+
+- dirctionary: keys(), values(), items()  >list는 아님(list로 감싸서 변형가능),
+
+- 연산자 **in**으로 포함여부 확인가능, **not in**도 사용가능, dictionary에서는 key값의 포함여부 확인
+
+- Boolean(bool) False일 때  > 0, ' ', [ ], ( ), { }   > if문의 조건식으로 데이터유무에 따라 조건을 걸 수 있음
+
+- 파이썬의 논리 연산자는 and, or, not 
+
+
+
+- input(): 값 받기
+
+
 
 
 
@@ -137,7 +151,7 @@ Bool은 True, False의 첫글자가 대문자!
 
 파이썬은 변수선언에 자료형이 없음
 
-튜플을 이용하여 한번에 여러 변수 선언 가능
+리스트나 튜플을 이용하여 한번에 여러 변수 선언 가능
 
 ​	 a, b = ('python', 'variable')   //a='python', b='variable'
 
@@ -145,17 +159,15 @@ Bool은 True, False의 첫글자가 대문자!
 
 
 
+#### mutable vs immutable (43p 참고)
 
-
-
-
-#### mutable vs inmutable (43p 참고)
-
-list는 muatable, tuple은 inmutable이다
+list는 muatable, tuple은 immutable이다
 
 참조 자료형(주소), 기본 자료형(값)
 
 ​	참조자료형: list, dictionary, set
+
+​	기본자료형: Number, String, tuple
 
 ​	따라서 list의 값을 **복사한 변수**를 가지고 싶다면, 
 
@@ -171,13 +183,37 @@ list는 muatable, tuple은 inmutable이다
 
 - {}를 쓰지않고 **들여쓰기**(Tab, 4칸)로 인식하므로 주의하자.
 
+- 파이썬은 swich가 없음. 조건문은 오직 if
+
+- 파이썬의 for문은 for-each 방식임 (리스트 등의 요소들을 사용)
+
+- 조건부 표현식
+
+   [조건식이 참인 경우] if [조건식] else [조건식이 거짓인 경우]
+
+  `msg = 'PASS' if score >= 60 else 'FAIL'`
+
+- break, continue
+
+- List Comprehension
+
+  [표현식 for 항목 in 반복가능객체 if 조건]
+
+  `result = [n * 3 for n in a]	#[3, 6, 9, 12]`
+
+  
 
 
 
+※ 참고: 주피터 노트북 설정파일 만들기
 
-파이썬의 for문은 for-each 방식임.
+​	jupyter notebook --generate -config
 
+​	설정파일 생성 위치:
 
+​	C:/Users/[자기계정]/.jupyter/jupyter...config.py
+
+​	c.NotebookApp.browser='크롬브라우저 위치'
 
 
 
