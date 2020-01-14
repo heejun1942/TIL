@@ -44,6 +44,8 @@ else:
 2. 주피터 노트북 설치
 
 > 주피터 노트북: 코드가 라인별로 실행되기 때문에 오류발생시 처음부터 다시 실행하지 않아도됨. [개발툴]
+>
+> 데이터 분석용임. 개발을 하지는 않음
 
 주피터 노트북에서는 변수만 쳐도 print됨.
 
@@ -195,13 +197,27 @@ list는 muatable, tuple은 immutable이다
 
 - break, continue
 
-- List Comprehension
+- for문을 사용하여 리스트 윈소를 제거할 때는 역순으로 해주자. > 진행되는 동안 index가 변하므로.
 
-  [표현식 for 항목 in 반복가능객체 if 조건]
+   `reversed(range(0,10))`
+
+- List Comprehension: for문과 if문을 이용한 리스트 생성가능
+
+  for문이 가장먼저, 표현식이 가장 나중에 적용됨.
+
+  `[표현식 for 항목 in 반복가능객체 if 조건]`
 
   `result = [n * 3 for n in a]	#[3, 6, 9, 12]`
-
   
+- for문) 두 개 이사의 변수 사용
+
+   ```python
+   data = [ [1, 2, 'a'], [3, 4, 'b'], [5, 6, 'c'] ]
+   for a, b, c in data:
+   	print(c)	#'a' 'b' 'c'
+   ```
+
+   
 
 
 
