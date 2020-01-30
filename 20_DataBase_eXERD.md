@@ -22,9 +22,9 @@ work with: 주소 붙여넣기 > enter > contact all update 체크해제
 
 
 
-비식별 관계 > 외래키 생성
+비식별 관계 (점선) > 외래키 생성
 
-식별 관계 > 외래키를 기본키로 사용할 때
+식별 관계 (실선) > 외래키를 기본키로 사용할 때
 
 
 
@@ -59,6 +59,10 @@ window > preferences > eXERD > DBMS 연결 설정 > 새연결
 
 
 ## 파이썬에서 DB사용
+
+- 숫자, 문자 모두 %s를 사용함.
+
+
 
 ```python
 import pymysql
@@ -117,7 +121,8 @@ conn=pymysql.connect(
     db='python', charset='utf8'
 )
 
-cursor=conn.cursor()
+cursor=conn.cursor() 
+
 sql='''SELECT * FROM MYSQL'''
 cursor.execute(sql)
 result= cursor.fetchall()
@@ -129,4 +134,42 @@ conn.commit()
 cursor.close()
 conn.close()
 ```
+
+
+
+```python
+#cursor=conn.cursor()는
+#아래와 같이 dictionary로 부르는게 더 좋음
+
+import pymysql
+
+conn = pymysql.connect(
+ host='localhost', user='root', password='1146',
+ db='mydb', charset='utf8'
+)
+
+cursor=conn.cursor(pymysql.cursors.DictCursor)
+sql='''SELECT id,year,area1,count(*) as cnt
+        FROM accident
+        GROUP BY area1, year'''
+
+cursor.execute(sql)
+result= cursor.fetchall()
+for row in result:
+    print(row['area1'], row['year'], row['cnt'])
+    
+conn.commit()
+cursor.close()
+conn.close()
+```
+
+
+
+
+
+#### SQLite
+
+가볍기 때문에 냉장고 등에 사용
+
+임베디드 데이터베이스
 
