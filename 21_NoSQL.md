@@ -65,3 +65,55 @@ update(): 수정이라는 개념이 없음. 덮어쓰기.
 ### 파이썬
 
 `conda install pymongo`: pymongo 설치
+
+
+
+## ReplicaSet & Sharding
+
+> 백업과 분산을 수월하게 하려고.
+>
+> replica: 복제 / shard: 분산저장
+
+
+
+### 1) ReplicaSet
+
+복제해놓는 것. 보통 세 개.
+
+heartbeat를 이용하여 다른 노드가 동작하는지 주기적으로 검사
+
+그러나 잠시 죽어있는 동안에는 데이터 저장 X (데이터소실)
+
+
+
+### 2) Sharding
+
+config: sharding을 위한 메타 데이터 저장.
+
+mongos: client의 요청처리. config 서버의 메타 데이터를 이용하여 각 MongoDB의 데이터에 접근.
+
+
+
+
+
+## Django (장고)
+
+`conda install django`: 장고 다운
+
+장고도 MVC 방식임 > MTV패턴으로 부름.
+
+
+
+플라스크...? 비교..
+
+
+
+`python manage.py runserver`: 서버 실행
+
+
+
+`conda install mysqlclient`: mysqlclient 설치
+
+
+
+\__str__  ??
