@@ -8,7 +8,7 @@
 
 
 
-\__str__  ??ab
+
 
 
 
@@ -110,5 +110,84 @@ admin.site.register(Curriculum)
 
 `conda install mysqlclient`: mysqlclient 설치
 
+```python
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'django',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': 3306
+    }
+}
+```
 
+
+
+
+
+## 장고 튜토리얼 투표앱
+
+
+
+데이터베이스 관련 API 테스트
+
+ `python manage.py shell`: 장고 shell 접속. 쉘을 통해 데이터 확인
+
+
+
+\__init__   인스턴스 생성시 자동으로 실행되는 함수
+
+\__str__   인스턴스자체를 출력할 때 형식을 지정하는 함수
+
+
+
+url로 변수받기 (마치 STS의 @Pathvariable)
+
+```python
+# polls/urls.py
+
+urlpatterns = [
+ path('', views.index, name='index'),
+ path('<int:question_id>/', views.detail, name='detail'),
+ path('<int:question_id>/results/', views.results, name='results'),
+ path('<int:question_id>/vote/', views.vote, name='vote'),
+
+]
+```
+
+url을 통해 question_id의 값을 views에서 받음.
+
+```python
+# polls/views.py
+
+# question_id는 url을 통해 받는다.
+def detail(request, question_id):
+    question= Question.objects.get(pk=question_id)
+    return render(request, 'polls/detail.html', {'question': question})
+```
+
+Question 모델의 데이터만 받았지만 fk로 연결된 Choice모델의 데이터를 사용할 수 있음.
+
+```python
+# templates/polls/detail.html
+
+<u1>
+# Question모델로 Choice테이블의 데이터를 불러옴.
+{% for choice in question.choice_set.all %}
+    <li>{{choice.choice_text}}</li>
+{% endfor %}
+</u1>
+```
+
+
+
+
+
+{{변수명}}
+
+html에서 전달받은 데이터를 사용할 때
+
+html에서 파이썬 문법 안에서도 가능
 
